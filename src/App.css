@@ -1,0 +1,27 @@
+.App {
+  text-align: center;
+  margin: auto;
+  padding: 5%;
+}
+
+.App-header {
+  background-color: #ff9d9d;
+  /* min-height: 20%; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: rgb(0, 0, 0);
+  margin-bottom: 20px !important;
+  margin-left: 1% !important;
+  margin-right: 1% !important;
+}
+.stepper {
+  width: 80%;
+  margin: auto;
+}
+
+.App-link {
+  color: #61dafb;
+}
