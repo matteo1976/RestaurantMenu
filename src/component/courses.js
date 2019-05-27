@@ -12,23 +12,31 @@ const styles = theme => ({
 });
 
 function FullWidthGrid(props) {
-  const { classes } = props;
+  const { classes, courseStep } = props;
   const gridCoursis = [];
 
   //TODO: usare fetch per prendere dati da json.......
 
   menuCourses.map(item => {
-    gridCoursis.push(
-      <Grid item xs={12} sm={6} md={4}>
-        <Course
-          image={item.image}
-          title={item.title}
-          spiceLevel={item.spiceLevel}
-          description={item.description}
-          courseType={item.courseType}
-        />
-      </Grid>
-    );
+    let showCourse = false;
+    item.courseType.map(itemCourseType => {
+      if (itemCourseType === courseStep) {
+        showCourse = true;
+      }
+    });
+    if (showCourse) {
+      gridCoursis.push(
+        <Grid item xs={12} sm={6} md={4}>
+          <Course
+            image={item.image}
+            title={item.title}
+            spiceLevel={item.spiceLevel}
+            description={item.description}
+            courseType={courseStep}
+          />
+        </Grid>
+      );
+    }
   });
 
   return (

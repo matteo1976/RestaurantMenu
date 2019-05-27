@@ -25,3 +25,11 @@
 .App-link {
   color: #61dafb;
 }
+
+.instructions {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.backButton {
+  margin-right: 10px;
+}
