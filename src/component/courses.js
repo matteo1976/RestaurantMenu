@@ -12,32 +12,67 @@ const styles = theme => ({
 });
 
 function FullWidthGrid(props) {
-  const { classes, courseStep } = props;
-  const gridCoursis = [];
-
+  const { classes, courseStep, coursesSelected, addCourses } = props;
+  let gridCoursis = [];
+  let coursesToShow = undefined;
   //TODO: usare fetch per prendere dati da json.......
+  //
+  if (courseStep === 6) {
+    //TODO: mettere una costante per ultimo step
+    gridCoursis = []; // delete for visualize all selected
+    menuCourses.map(item => {
+      coursesSelected.map(itemCourseSelected => {
+        // array con gli id
 
-  menuCourses.map(item => {
-    let showCourse = false;
-    item.courseType.map(itemCourseType => {
-      if (itemCourseType === courseStep) {
-        showCourse = true;
+        if (item.id === itemCourseSelected) {
+          gridCoursis.push(
+            <Grid key={item.id} item xs={12} sm={6} md={4}>
+              <Course
+                id={item.id}
+                image={item.image}
+                title={item.title}
+                spiceLevel={item.spiceLevel}
+                description={item.description}
+                courseType={courseStep}
+                isSelect={true}
+                coursesSelected={coursesSelected}
+                addCourses={addCourses}
+                allery={item.allery}
+              />
+            </Grid>
+          );
+        }
+      });
+    });
+  } else {
+    menuCourses.map(item => {
+      let showCourse = false;
+      item.courseType.map(itemCourseType => {
+        if (itemCourseType === courseStep) {
+          showCourse = true;
+        }
+      });
+      if (showCourse) {
+        let isSelect = coursesSelected.indexOf(item.id) !== -1 ? true : false;
+        gridCoursis.push(
+          <Grid key={item.id} item xs={12} sm={6} md={4}>
+            <Course
+              id={item.id}
+              image={item.image}
+              title={item.title}
+              spiceLevel={item.spiceLevel}
+              description={item.description}
+              courseType={courseStep}
+              isSelect={isSelect}
+              coursesSelected={coursesSelected}
+              addCourses={addCourses}
+              allery={item.allery}
+            />
+          </Grid>
+        );
       }
     });
-    if (showCourse) {
-      gridCoursis.push(
-        <Grid item xs={12} sm={6} md={4}>
-          <Course
-            image={item.image}
-            title={item.title}
-            spiceLevel={item.spiceLevel}
-            description={item.description}
-            courseType={courseStep}
-          />
-        </Grid>
-      );
-    }
-  });
+  }
 
   return (
     <div className={classes.root}>

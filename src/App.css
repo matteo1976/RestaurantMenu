@@ -1,17 +1,17 @@
 .App {
   text-align: center;
   margin: auto;
-  padding: 5%;
+  padding: 2%;
 }
 
 .App-header {
-  background-color: #ff9d9d;
-  /* min-height: 20%; */
+  /* background-color: #ff9d9d; */
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  font-family: cursive;
+  font-size: calc(24px + 2vmin);
   color: rgb(0, 0, 0);
   margin-bottom: 20px !important;
   margin-left: 1% !important;
@@ -19,7 +19,7 @@
 }
 .stepper {
   width: 80%;
-  margin: auto;
+  /* margin: auto; */
 }
 
 .App-link {
@@ -31,5 +31,9 @@
   margin-bottom: 10px;
 }
 .backButton {
-  margin-right: 10px;
+  margin-right: 20px !important;
+}
+
+.stepControl {
+  padding: 2em;
 }

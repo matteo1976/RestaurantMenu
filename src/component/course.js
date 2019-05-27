@@ -14,21 +14,48 @@ import FavoriteIcon from "@material-ui/icons/Favorite";
 import ShareIcon from "@material-ui/icons/Share";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
+import Tooltip from "@material-ui/core/Tooltip";
+import IconButton from "@material-ui/core/IconButton";
+import NewReleasesSharp from "@material-ui/icons/NewReleasesSharp";
+import { all } from "rsvp";
 
 export default class Course extends Component {
+  state = {
+    isSelect: false
+  };
+
   myClasses = {
     card: {
-      maxWidth: 400
+      maxWidth: 350
     },
     media: {
       height: 0,
-      paddingTop: "46.25%" // 16:9
+      paddingTop: "30.25%" // 16:9
     },
     avatar: {
       backgroundColor: "#d80f0f"
+    },
+    description: {
+      minHeight: "6em",
+      padding: 0,
+      paddingTop: 10
+    },
+    title: {
+      fontSize: "1em",
+      minHeight: "2.5em"
     }
   };
 
+  addFavorite = () => {
+    const { addCourses, id } = this.props;
+    addCourses(id);
+    this.setState({ isSelect: !this.state.isSelect });
+  };
+
+  componentDidMount() {
+    const { isSelect } = this.props;
+    this.setState({ isSelect });
+  }
   render() {
     const {
       courseType,
@@ -41,27 +68,39 @@ export default class Course extends Component {
     } = this.props;
 
     const myClasses = this.myClasses;
+    let favStyle = this.state.isSelect ? { color: "red" } : { color: "grey" };
+
     return (
-      <Card className={myClasses.card}>
+      <Card style={myClasses.card}>
         <CardHeader
+          style={myClasses.title}
           avatar={
-            <Avatar aria-label="Recipe" style={myClasses.avatar}>
-              {courseType.toString()}{" "}
-            </Avatar>
+            <Tooltip title="Spice Level">
+              <Avatar aria-label="Recipe" style={myClasses.avatar}>
+                {spiceLevel}
+              </Avatar>
+            </Tooltip>
           }
+          disableTypography={true}
           title={title}
-          subheader={` Spice Level ${spiceLevel}`}
         />
+
         <CardMedia style={myClasses.media} image={image} title="Paella dish" />
-        <CardContent>
+        <CardContent style={myClasses.description}>
           <Typography variant="body2" color="textSecondary" component="p">
             {description}
           </Typography>
         </CardContent>
         <CardActions disableSpacing>
-          <Icon aria-label="Add to favorites">
-            <FavoriteIcon />
+          <Tooltip title="Add to your menu">
+            <IconButton onClick={this.addFavorite} style={favStyle}>
+              <FavoriteIcon />
+            </IconButton>
+          </Tooltip>
+          <Icon>
+            <NewReleasesSharp />
           </Icon>
+          {`  Allery: ${allery.toString()}`}
         </CardActions>
       </Card>
     );
