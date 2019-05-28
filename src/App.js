@@ -11,10 +11,11 @@ import "./App.css";
 import Courses from "./component/courses";
 import { COURSES, STEPS } from "./constants";
 import logo from "./img/logo.jpg";
+import { StepButton } from "@material-ui/core";
 
 export default class App extends Component {
   state = {
-    activeStep: STEPS.APPETITAIZER,
+    activeStep: STEPS.START,
     coursesSelected: []
   };
 
@@ -26,52 +27,55 @@ export default class App extends Component {
     } else coursesSelected.splice(coursesSelected.indexOf(id), 1);
     this.setState({ coursesSelected });
   };
+
+  handleReset = () => {
+    this.setState({ activeStep: STEPS.START, coursesSelected: [] });
+  };
+
+  handleNext = () => {
+    let actualStep = this.state.activeStep;
+
+    this.setState({ activeStep: actualStep + 1 });
+  };
+
+  handleBack = () => {
+    let actualStep = this.state.activeStep;
+    this.setState({ activeStep: actualStep - 1 });
+  };
+
+  getStepContent = stepIndex => {
+    switch (stepIndex) {
+      case STEPS.APPETITAIZER:
+        return COURSES.APPETITAIZER;
+      case STEPS.SOUP:
+        return COURSES.SOUP;
+      case STEPS.FISH:
+        return COURSES.FISH;
+      case STEPS.SALAD:
+        return COURSES.SALAD;
+      case STEPS.MAIN_COURSE:
+        return COURSES.MAIN_COURSE;
+      case STEPS.DESSERT:
+        return COURSES.DESSERT;
+      case STEPS.MENU:
+        return COURSES.MENU;
+
+      default:
+        return "Uknown stepIndex";
+    }
+  };
+
   render() {
-    const handleNext = () => {
-      let actualStep = this.state.activeStep;
-
-      this.setState({ activeStep: actualStep + 1 });
-    };
-
-    const handleBack = () => {
-      let actualStep = this.state.activeStep;
-      this.setState({ activeStep: actualStep - 1 });
-    };
-
-    const handleReset = () => {
-      this.setState({ activeStep: STEPS.APPETITAIZER });
-    };
-    const getStepContent = stepIndex => {
-      switch (stepIndex) {
-        case STEPS.APPETITAIZER:
-          return COURSES.APPETITAIZER;
-        case STEPS.SOUP:
-          return COURSES.SOUP;
-        case STEPS.FISH:
-          return COURSES.FISH;
-        case STEPS.SALAD:
-          return COURSES.SALAD;
-        case STEPS.MAIN_COURSE:
-          return COURSES.MAIN_COURSE;
-        case STEPS.DESSERT:
-          return COURSES.DESSERT;
-        case STEPS.MENU:
-          return COURSES.MENU;
-
-        default:
-          return "Uknown stepIndex";
-      }
-    };
     const steps = [
-      "Hors d'oeuvres ",
-      "Soup",
-      "Fish",
-      "Salad",
-      "Main course",
-      "Dessert"
+      COURSES.APPETITAIZER,
+      COURSES.SOUP,
+      COURSES.FISH,
+      COURSES.SALAD,
+      COURSES.MAIN_COURSE,
+      COURSES.DESSERT
     ];
 
-    const { activeStep } = this.state;
+    const { activeStep, coursesSelected } = this.state;
     return (
       <div className="App">
         <Grid container spacing={3}>
@@ -80,6 +84,9 @@ export default class App extends Component {
           </Grid>
           <Grid className="App-header" item xs={10}>
             <span>Menu</span>
+            <Typography className="instructions">
+              {this.getStepContent(this.activeStep)}
+            </Typography>
           </Grid>
 
           <Grid className="stepper" item xs={12}>
@@ -106,43 +113,59 @@ export default class App extends Component {
         <div style={{ width: "70%", margin: "auto" }}>
           <Courses
             courseStep={activeStep}
-            coursesSelected={this.state.coursesSelected}
+            coursesSelected={coursesSelected}
             addCourses={this.menageCourses}
           />
         </div>
         <div />
         <div className="stepControl">
-          {activeStep === steps.length ? (
-            <div>
-              <Typography className="instructions">
-                All steps completed
-              </Typography>
-
-              <Button onClick={handleReset}>Reset</Button>
-            </div>
-          ) : (
-            <div>
-              <Typography className="instructions">
-                {getStepContent(activeStep)}
-              </Typography>
-              <div>
-                <Button
-                  disabled={activeStep === 0}
-                  onClick={handleBack}
-                  className="backButton"
-                >
-                  Back
-                </Button>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={handleNext}
-                >
-                  {activeStep === steps.length - 1 ? "Finish" : "Next"}
-                </Button>
-              </div>
-            </div>
-          )}
+          {(() => {
+            switch (activeStep) {
+              case STEPS.START:
+                return (
+                  <div className="App">
+                    <img src={logo} />
+                    <h3>Welcome to Resturant</h3>
+                    <h5>start to select your menu</h5>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={this.handleNext}
+                    >
+                      START
+                    </Button>
+                  </div>
+                );
+              case STEPS.FINISH:
+                return (
+                  <div>
+                    <Typography className="instructions">
+                      All steps completed
+                    </Typography>
+                    <Button onClick={this.handleReset}>Reset</Button>
+                  </div>
+                );
+              default:
+                return (
+                  <div>
+                    <Button
+                      disabled={activeStep === 0}
+                      onClick={this.handleBack}
+                      className="backButton"
+                    >
+                      Back
+                    </Button>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={this.handleNext}
+                    >
+                      {activeStep === steps.length - 1 ? "Finish" : "Next"}
+                    </Button>
+                  </div>
+                );
+            }
+          })()}
         </div>
       </div>
     );

@@ -1,5 +1,6 @@
 export const COURSES = {
-  APPETITAIZER: "Appetitaizer",
+  START: "start",
+  APPETITAIZER: "Appetizer",
   SOUP: "Soup",
   FISH: "Fish",
   SALAD: "Salad",
@@ -8,11 +9,12 @@ export const COURSES = {
 };
 
 export const STEPS = {
+  START: -1,
   APPETITAIZER: 0,
   SOUP: 1,
   FISH: 2,
   SALAD: 3,
   MAIN_COURSE: 4,
   DESSERT: 5,
-  MENU: 6
+  FINISH: 6
 };
