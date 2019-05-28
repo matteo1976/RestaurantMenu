@@ -1,23 +1,16 @@
 import React, { Component } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import clsx from "clsx";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
 import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
-import Collapse from "@material-ui/core/Collapse";
 import Avatar from "@material-ui/core/Avatar";
 import Icon from "@material-ui/core/Icon";
 import Typography from "@material-ui/core/Typography";
 import FavoriteIcon from "@material-ui/icons/Favorite";
-import ShareIcon from "@material-ui/icons/Share";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
 import Tooltip from "@material-ui/core/Tooltip";
 import IconButton from "@material-ui/core/IconButton";
 import NewReleasesSharp from "@material-ui/icons/NewReleasesSharp";
-import { all } from "rsvp";
 
 export default class Course extends Component {
   state = {
@@ -60,15 +53,7 @@ export default class Course extends Component {
     this.setState({ isSelect });
   }
   render() {
-    const {
-      courseType,
-      id,
-      title,
-      image,
-      description,
-      allery,
-      spiceLevel
-    } = this.props;
+    const { title, image, description, allery, spiceLevel } = this.props;
     var omega = "\u{1f336}";
 
     const myClasses = this.myClasses;

@@ -11,12 +11,20 @@ import "./App.css";
 import Courses from "./component/courses";
 import { COURSES, STEPS } from "./constants";
 import logo from "./img/logo.jpg";
-import { StepButton } from "@material-ui/core";
+import Dialog from "@material-ui/core/Dialog";
 
 export default class App extends Component {
   state = {
     activeStep: STEPS.START,
-    coursesSelected: []
+    coursesSelected: [],
+    openAlert: false
+  };
+
+  alertStyle = {
+    textAlign: "center",
+    width: "50%",
+    margin: "auto",
+    marginBottom: "1em"
   };
 
   menageCourses = id => {
@@ -32,10 +40,18 @@ export default class App extends Component {
     this.setState({ activeStep: STEPS.START, coursesSelected: [] });
   };
 
-  handleNext = () => {
-    let actualStep = this.state.activeStep;
+  handleClose = () => {
+    this.setState({ openAlert: false });
+  };
 
-    this.setState({ activeStep: actualStep + 1 });
+  handleNext = () => {
+    let { coursesSelected } = this.state;
+    let actualStep = this.state.activeStep;
+    if ((actualStep === STEPS.MAIN_COURSE) & (coursesSelected.length === 0)) {
+      this.setState({ openAlert: true });
+    } else {
+      this.setState({ activeStep: actualStep + 1 });
+    }
   };
 
   handleBack = () => {
@@ -80,7 +96,7 @@ export default class App extends Component {
       <div className="App">
         <Grid container spacing={3}>
           <Grid item xs={1}>
-            <img src={logo} width="150px" height="auto" />
+            <img src={logo} width="150px" height="auto" alt="Logo Resturant" />
           </Grid>
           <Grid className="App-header" item xs={10}>
             <span>Menu</span>
@@ -124,7 +140,7 @@ export default class App extends Component {
               case STEPS.START:
                 return (
                   <div className="App">
-                    <img src={logo} />
+                    <img src={logo} alt="Logo Resturant" />
                     <h3>Welcome to Resturant</h3>
                     <h5>start to select your menu</h5>
                     <Button
@@ -140,7 +156,10 @@ export default class App extends Component {
                 return (
                   <div>
                     <Typography className="instructions">
-                      All steps completed
+                      <p>
+                        <h2>This is your menu.</h2>
+                        Thank you for choosing Resturant
+                      </p>
                     </Typography>
                     <Button onClick={this.handleReset}>Reset</Button>
                   </div>
@@ -167,6 +186,18 @@ export default class App extends Component {
             }
           })()}
         </div>
+        <Dialog
+          open={this.state.openAlert}
+          onClose={this.handleClose}
+          aria-labelledby="simple-dialog-title"
+        >
+          <div style={{ textAlign: "center", with: "90%" }}>
+            <h2>Alert!</h2>
+          </div>
+          <div style={this.alertStyle}>
+            You have to select one or more Main Courses
+          </div>
+        </Dialog>
       </div>
     );
   }

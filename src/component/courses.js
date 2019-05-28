@@ -12,14 +12,15 @@ const styles = theme => ({
 });
 
 function FullWidthGrid(props) {
+  /*eslint array-callback-return: "off"*/
   const { classes, courseStep, coursesSelected, addCourses } = props;
   let gridCoursis = [];
-  let coursesToShow = undefined;
   //TODO: usare fetch per prendere dati da json.......
   //
   if (courseStep === 6) {
     //TODO: mettere una costante per ultimo step
     gridCoursis = []; // delete for visualize all selected
+
     menuCourses.map(item => {
       coursesSelected.map(itemCourseSelected => {
         // array con gli id
