@@ -21,7 +21,8 @@ import { all } from "rsvp";
 
 export default class Course extends Component {
   state = {
-    isSelect: false
+    isSelect: false,
+    raised: false
   };
 
   myClasses = {
@@ -33,7 +34,7 @@ export default class Course extends Component {
       paddingTop: "30.25%" // 16:9
     },
     avatar: {
-      backgroundColor: "#d80f0f"
+      backgroundColor: "#C24641"
     },
     description: {
       minHeight: "6em",
@@ -45,6 +46,8 @@ export default class Course extends Component {
       minHeight: "2.5em"
     }
   };
+
+  toggleRaised = () => this.setState({ raised: !this.state.raised });
 
   addFavorite = () => {
     const { addCourses, id } = this.props;
@@ -66,17 +69,34 @@ export default class Course extends Component {
       allery,
       spiceLevel
     } = this.props;
+    var omega = "\u{1f336}";
 
     const myClasses = this.myClasses;
     let favStyle = this.state.isSelect ? { color: "red" } : { color: "grey" };
+    let allergyIcons =
+      allery.length > 0 ? (
+        <>
+          <Icon>
+            <NewReleasesSharp />
+          </Icon>
+          Allergy: {allery.toString()}
+        </>
+      ) : null;
 
     return (
-      <Card style={myClasses.card}>
+      <Card
+        onMouseOver={this.toggleRaised}
+        onMouseOut={this.toggleRaised}
+        raised={this.state.raised}
+        onClick={this.addFavorite}
+        style={myClasses.card}
+      >
         <CardHeader
           style={myClasses.title}
           avatar={
             <Tooltip title="Spice Level">
               <Avatar aria-label="Recipe" style={myClasses.avatar}>
+                {omega}
                 {spiceLevel}
               </Avatar>
             </Tooltip>
@@ -93,14 +113,15 @@ export default class Course extends Component {
         </CardContent>
         <CardActions disableSpacing>
           <Tooltip title="Add to your menu">
-            <IconButton onClick={this.addFavorite} style={favStyle}>
+            <IconButton style={favStyle}>
               <FavoriteIcon />
             </IconButton>
           </Tooltip>
-          <Icon>
+          {allergyIcons}
+          {/* <Icon>
             <NewReleasesSharp />
           </Icon>
-          {`  Allery: ${allery.toString()}`}
+          {`  Allergy: ${allery.toString()}`} */}
         </CardActions>
       </Card>
     );
