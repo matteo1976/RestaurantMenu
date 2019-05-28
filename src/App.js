@@ -96,7 +96,7 @@ export default class App extends Component {
       <div className="App">
         <Grid container spacing={3}>
           <Grid item xs={1}>
-            <img src={logo} width="150px" height="auto" alt="Logo Resturant" />
+            <img src={logo} width="150px" height="auto" alt="Logo Restaurant" />
           </Grid>
           <Grid className="App-header" item xs={10}>
             <span>Menu</span>
@@ -140,8 +140,8 @@ export default class App extends Component {
               case STEPS.START:
                 return (
                   <div className="App">
-                    <img src={logo} alt="Logo Resturant" />
-                    <h3>Welcome to Resturant</h3>
+                    <img src={logo} alt="Logo Restaurant" />
+                    <h3>Welcome to Restaurant</h3>
                     <h5>start to select your menu</h5>
                     <Button
                       variant="contained"
@@ -158,7 +158,7 @@ export default class App extends Component {
                     <Typography className="instructions">
                       <p>
                         <h2>This is your menu.</h2>
-                        Thank you for choosing Resturant
+                        Thank you for choosing Restaurant
                       </p>
                     </Typography>
                     <Button onClick={this.handleReset}>Reset</Button>
