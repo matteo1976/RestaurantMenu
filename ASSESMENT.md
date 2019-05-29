@@ -1,6 +1,6 @@
 #  RestaurantMenu 
 
-his webapp allows you to select your favorite menu and choose from several dishes in the many courses.
+This webapp allows you to select your favorite menu and choose from several dishes in the many courses.
 The user will have the opportunity to browse the menu step by step through the different courses. For each course there is a name, an image, a description, if there are any allergy factors, the level of spices.
 The user can select or deselect the dishes he wants (see selection of the dish), and go to the next dish or return to the previous one and correct his choice.
 The user is obliged to choose at least one dish from the main course.
