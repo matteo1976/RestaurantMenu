@@ -11,8 +11,24 @@ import FavoriteIcon from "@material-ui/icons/Favorite";
 import Tooltip from "@material-ui/core/Tooltip";
 import IconButton from "@material-ui/core/IconButton";
 import NewReleasesSharp from "@material-ui/icons/NewReleasesSharp";
+import Add from '@material-ui/icons/Add';
+import PropTypes from "prop-types";
+
 
 export default class Course extends Component {
+  static propTypes = {
+    id:PropTypes.number.isRequired,
+    image:PropTypes.element,
+    title:PropTypes.string,
+    spiceLevel:PropTypes.number,
+    description:PropTypes.string,
+    courseType:PropTypes.array,
+    isSelect:PropTypes.bool,
+    coursesSelectedId:PropTypes.array,
+    addCourses:PropTypes.func.isRequired,
+    allery:PropTypes.array,
+  };
+
   state = {
     isSelect: false,
     raised: false
@@ -37,6 +53,9 @@ export default class Course extends Component {
     title: {
       fontSize: "1em",
       minHeight: "2.5em"
+    },
+    action:{
+      fontSize:"0.8em"
     }
   };
 
@@ -54,10 +73,12 @@ export default class Course extends Component {
   }
   render() {
     const { title, image, description, allery, spiceLevel } = this.props;
-    var omega = "\u{1f336}";
+    var pepper = "\u{1f336}";
 
     const myClasses = this.myClasses;
     let favStyle = this.state.isSelect ? { color: "red" } : { color: "grey" };
+    
+    // visual allergy if there are
     let allergyIcons =
       allery.length > 0 ? (
         <>
@@ -68,6 +89,11 @@ export default class Course extends Component {
         </>
       ) : null;
 
+      
+    let spiceLevelIcon='';
+    for (let index = 0; index < spiceLevel; index++) {
+      spiceLevelIcon +=pepper +' '       
+    }
     return (
       <Card
         onMouseOver={this.toggleRaised}
@@ -79,10 +105,10 @@ export default class Course extends Component {
         <CardHeader
           style={myClasses.title}
           avatar={
-            <Tooltip title="Spice Level">
+            <Tooltip title="Add to your menu">
               <Avatar aria-label="Recipe" style={myClasses.avatar}>
-                {omega}
-                {spiceLevel}
+                <Icon><Add/></Icon>
+                
               </Avatar>
             </Tooltip>
           }
@@ -96,17 +122,18 @@ export default class Course extends Component {
             {description}
           </Typography>
         </CardContent>
-        <CardActions disableSpacing>
-          <Tooltip title="Add to your menu">
+        <CardActions style={myClasses.action}>
+          <Tooltip title="your choice ">
             <IconButton style={favStyle}>
               <FavoriteIcon />
             </IconButton>
           </Tooltip>
           {allergyIcons}
-          {/* <Icon>
-            <NewReleasesSharp />
-          </Icon>
-          {`  Allergy: ${allery.toString()}`} */}
+
+          <Tooltip title="Spice level ">
+            <span style={{marginLeft:"10%"}}>{spiceLevelIcon}</span>
+          </Tooltip>
+
         </CardActions>
       </Card>
     );

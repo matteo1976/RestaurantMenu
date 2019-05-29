@@ -4,6 +4,7 @@ import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import menuCourses from "../fe-tech-data.json";
 import Course from "./course";
+import {STEPS} from '../constants'
 
 const styles = theme => ({
   root: {
@@ -15,15 +16,15 @@ function FullWidthGrid(props) {
   /*eslint array-callback-return: "off"*/
   const { classes, courseStep, coursesSelectedId, addCourses } = props;
   let gridCoursis = [];
-  //TODO: usare fetch per prendere dati da json.......
-  //
-  if (courseStep === 6) {
-    //TODO: mettere una costante per ultimo step
+  //TODO: use fetch  for get dat of jsonfile
+  
+  if (courseStep === STEPS.FINISH) {
+    
     gridCoursis = []; // delete for visualize all selected
 
     menuCourses.map(item => {
       coursesSelectedId.map(itemCourseSelected => {
-        // array con gli id
+        // id array 
 
         if (item.id === itemCourseSelected) {
           gridCoursis.push(
@@ -46,6 +47,7 @@ function FullWidthGrid(props) {
       });
     });
   } else {
+    // scan for visualise only course of actual section
     menuCourses.map(item => {
       let showCourse = false;
       item.courseType.map(itemCourseType => {
@@ -85,7 +87,12 @@ function FullWidthGrid(props) {
 }
 
 FullWidthGrid.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  courseStep:PropTypes.number.isRequired,
+  coursesSelectedId:PropTypes.array,
+  addCourses:PropTypes.func.isRequired
+
+
 };
 
 export default withStyles(styles)(FullWidthGrid);

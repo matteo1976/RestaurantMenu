@@ -28,6 +28,8 @@ export default class App extends Component {
     marginBottom: "1em"
   };
 
+
+  // ad and delete courses
   menageCourses = (id,type) => {
     let { coursesSelectedId,IdmainCourseSelected } = this.state;
 
@@ -49,6 +51,7 @@ export default class App extends Component {
     this.setState({ activeStep: STEPS.START, coursesSelectedId: [],IdmainCourseSelected:[] });
   };
 
+  // close dialog for alert in main couse
   handleClose = () => {
     this.setState({ openAlert: false });
   };
