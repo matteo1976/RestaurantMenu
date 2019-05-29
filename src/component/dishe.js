@@ -1,3 +1,5 @@
+// this is the single card
+
 import React, { Component } from "react";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
@@ -15,7 +17,7 @@ import Add from '@material-ui/icons/Add';
 import PropTypes from "prop-types";
 
 
-export default class Course extends Component {
+export default class Dishe extends Component {
   static propTypes = {
     id:PropTypes.number.isRequired,
     image:PropTypes.element,
@@ -24,8 +26,7 @@ export default class Course extends Component {
     description:PropTypes.string,
     courseType:PropTypes.array,
     isSelect:PropTypes.bool,
-    coursesSelectedId:PropTypes.array,
-    addCourses:PropTypes.func.isRequired,
+    menageDishes:PropTypes.func.isRequired,
     allery:PropTypes.array,
   };
 
@@ -59,23 +60,25 @@ export default class Course extends Component {
     }
   };
 
-  toggleRaised = () => this.setState({ raised: !this.state.raised });
-
-  addFavorite = () => {
-    const { addCourses, id,courseType } = this.props;
-    addCourses(id,courseType);
-    this.setState({ isSelect: !this.state.isSelect });
-  };
-
   componentDidMount() {
     const { isSelect } = this.props;
     this.setState({ isSelect });
   }
+
+  //shadow effect onMouseOver onMouseOut
+  toggleRaised = () => this.setState({ raised: !this.state.raised });
+
+  addFavorite = () => {
+    const { menageDishes, id,courseType } = this.props;
+    menageDishes(id,courseType);
+    this.setState({ isSelect: !this.state.isSelect });
+  };
+
   render() {
     const { title, image, description, allery, spiceLevel } = this.props;
     var pepper = "\u{1f336}";
-
     const myClasses = this.myClasses;
+
     let favStyle = this.state.isSelect ? { color: "red" } : { color: "grey" };
     
     // visual allergy if there are
@@ -116,7 +119,7 @@ export default class Course extends Component {
           title={title}
         />
 
-        <CardMedia style={myClasses.media} image={image} title="Paella dish" />
+        <CardMedia style={myClasses.media} image={image} title={title} />
         <CardContent style={myClasses.description}>
           <Typography variant="body2" color="textSecondary" component="p">
             {description}

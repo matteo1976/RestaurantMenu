@@ -8,7 +8,7 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 
 import "./App.css";
-import Courses from "./component/courses";
+import Dishes from "./component/dishes";
 import { COURSES, STEPS } from "./constants";
 import logo from "./img/logo.jpg";
 import Dialog from "@material-ui/core/Dialog";
@@ -16,8 +16,8 @@ import Dialog from "@material-ui/core/Dialog";
 export default class App extends Component {
   state = {
     activeStep: STEPS.START,
-    coursesSelectedId: [],
-    IdmainCourseSelected:[],
+    dishesSelectedId: [],
+    MainCourse_IdDisheSelected:[],
     openAlert: false
   };
 
@@ -29,26 +29,26 @@ export default class App extends Component {
   };
 
 
-  // ad and delete courses
-  menageCourses = (id,type) => {
-    let { coursesSelectedId,IdmainCourseSelected } = this.state;
+  // add and delete dishes of final list
+  menageDishes = (id,type) => {
+    let { dishesSelectedId,MainCourse_IdDisheSelected } = this.state;
 
-    if (coursesSelectedId.indexOf(id) === -1) { // add course
-      coursesSelectedId.push(id);
+    if (dishesSelectedId.indexOf(id) === -1) { // add course
+      dishesSelectedId.push(id);
       if (type===STEPS.MAIN_COURSE){
-        IdmainCourseSelected.push(id)
+        MainCourse_IdDisheSelected.push(id)
       } 
     } else { // delete course
-      coursesSelectedId.splice(coursesSelectedId.indexOf(id), 1);
+      dishesSelectedId.splice(dishesSelectedId.indexOf(id), 1);
       if (type===STEPS.MAIN_COURSE){
-        IdmainCourseSelected.splice(IdmainCourseSelected.indexOf(type),1)
+        MainCourse_IdDisheSelected.splice(MainCourse_IdDisheSelected.indexOf(type),1)
       } 
     }
-    this.setState({ coursesSelectedId,IdmainCourseSelected });
+    this.setState({ dishesSelectedId,MainCourse_IdDisheSelected });
   };
 
   handleReset = () => {
-    this.setState({ activeStep: STEPS.START, coursesSelectedId: [],IdmainCourseSelected:[] });
+    this.setState({ activeStep: STEPS.START, dishesSelectedId: [],MainCourse_IdDisheSelected:[] });
   };
 
   // close dialog for alert in main couse
@@ -57,11 +57,11 @@ export default class App extends Component {
   };
 
   handleNext = () => {
-    let {IdmainCourseSelected } = this.state;
+    let {MainCourse_IdDisheSelected } = this.state;
     let actualStep = this.state.activeStep;
     
     // ad control for main course
-    if ((actualStep === STEPS.MAIN_COURSE) & (IdmainCourseSelected.length===0)) {
+    if ((actualStep === STEPS.MAIN_COURSE) & (MainCourse_IdDisheSelected.length===0)) {
       this.setState({ openAlert: true });
     } else {
       this.setState({ activeStep: actualStep + 1 });
@@ -105,7 +105,7 @@ export default class App extends Component {
       COURSES.DESSERT
     ];
 
-    const { activeStep, coursesSelectedId } = this.state;
+    const { activeStep, dishesSelectedId } = this.state;
     return (
       <div className="App">
         <Grid container spacing={3}>
@@ -141,10 +141,10 @@ export default class App extends Component {
           </Grid>
         </Grid>
         <div style={{ width: "70%", margin: "auto" }}>
-          <Courses
+          <Dishes
             courseStep={activeStep}
-            coursesSelectedId={coursesSelectedId}
-            addCourses={this.menageCourses}
+            dishesSelectedId={dishesSelectedId}
+            menageDishes={this.menageDishes}
           />
         </div>
         <div />
