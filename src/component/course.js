@@ -43,8 +43,8 @@ export default class Course extends Component {
   toggleRaised = () => this.setState({ raised: !this.state.raised });
 
   addFavorite = () => {
-    const { addCourses, id } = this.props;
-    addCourses(id);
+    const { addCourses, id,courseType } = this.props;
+    addCourses(id,courseType);
     this.setState({ isSelect: !this.state.isSelect });
   };
 

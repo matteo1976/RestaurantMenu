@@ -16,7 +16,8 @@ import Dialog from "@material-ui/core/Dialog";
 export default class App extends Component {
   state = {
     activeStep: STEPS.START,
-    coursesSelected: [],
+    coursesSelectedId: [],
+    IdmainCourseSelected:[],
     openAlert: false
   };
 
@@ -27,17 +28,25 @@ export default class App extends Component {
     marginBottom: "1em"
   };
 
-  menageCourses = id => {
-    let { coursesSelected } = this.state;
-    if (coursesSelected.indexOf(id) === -1) {
-      coursesSelected.push(id);
-      this.setState({ coursesSelected });
-    } else coursesSelected.splice(coursesSelected.indexOf(id), 1);
-    this.setState({ coursesSelected });
+  menageCourses = (id,type) => {
+    let { coursesSelectedId,IdmainCourseSelected } = this.state;
+
+    if (coursesSelectedId.indexOf(id) === -1) { // add course
+      coursesSelectedId.push(id);
+      if (type===STEPS.MAIN_COURSE){
+        IdmainCourseSelected.push(id)
+      } 
+    } else { // delete course
+      coursesSelectedId.splice(coursesSelectedId.indexOf(id), 1);
+      if (type===STEPS.MAIN_COURSE){
+        IdmainCourseSelected.splice(IdmainCourseSelected.indexOf(type),1)
+      } 
+    }
+    this.setState({ coursesSelectedId,IdmainCourseSelected });
   };
 
   handleReset = () => {
-    this.setState({ activeStep: STEPS.START, coursesSelected: [] });
+    this.setState({ activeStep: STEPS.START, coursesSelectedId: [],IdmainCourseSelected:[] });
   };
 
   handleClose = () => {
@@ -45,9 +54,11 @@ export default class App extends Component {
   };
 
   handleNext = () => {
-    let { coursesSelected } = this.state;
+    let {IdmainCourseSelected } = this.state;
     let actualStep = this.state.activeStep;
-    if ((actualStep === STEPS.MAIN_COURSE) & (coursesSelected.length === 0)) {
+    
+    // ad control for main course
+    if ((actualStep === STEPS.MAIN_COURSE) & (IdmainCourseSelected.length===0)) {
       this.setState({ openAlert: true });
     } else {
       this.setState({ activeStep: actualStep + 1 });
@@ -91,7 +102,7 @@ export default class App extends Component {
       COURSES.DESSERT
     ];
 
-    const { activeStep, coursesSelected } = this.state;
+    const { activeStep, coursesSelectedId } = this.state;
     return (
       <div className="App">
         <Grid container spacing={3}>
@@ -129,7 +140,7 @@ export default class App extends Component {
         <div style={{ width: "70%", margin: "auto" }}>
           <Courses
             courseStep={activeStep}
-            coursesSelected={coursesSelected}
+            coursesSelectedId={coursesSelectedId}
             addCourses={this.menageCourses}
           />
         </div>

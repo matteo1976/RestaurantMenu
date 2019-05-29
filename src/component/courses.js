@@ -13,7 +13,7 @@ const styles = theme => ({
 
 function FullWidthGrid(props) {
   /*eslint array-callback-return: "off"*/
-  const { classes, courseStep, coursesSelected, addCourses } = props;
+  const { classes, courseStep, coursesSelectedId, addCourses } = props;
   let gridCoursis = [];
   //TODO: usare fetch per prendere dati da json.......
   //
@@ -22,7 +22,7 @@ function FullWidthGrid(props) {
     gridCoursis = []; // delete for visualize all selected
 
     menuCourses.map(item => {
-      coursesSelected.map(itemCourseSelected => {
+      coursesSelectedId.map(itemCourseSelected => {
         // array con gli id
 
         if (item.id === itemCourseSelected) {
@@ -36,7 +36,7 @@ function FullWidthGrid(props) {
                 description={item.description}
                 courseType={courseStep}
                 isSelect={true}
-                coursesSelected={coursesSelected}
+                coursesSelectedId={coursesSelectedId}
                 addCourses={addCourses}
                 allery={item.allery}
               />
@@ -54,7 +54,7 @@ function FullWidthGrid(props) {
         }
       });
       if (showCourse) {
-        let isSelect = coursesSelected.indexOf(item.id) !== -1 ? true : false;
+        let isSelect = coursesSelectedId.indexOf(item.id) !== -1 ? true : false;
         gridCoursis.push(
           <Grid key={item.id} item xs={12} sm={6} md={4}>
             <Course
@@ -65,7 +65,7 @@ function FullWidthGrid(props) {
               description={item.description}
               courseType={courseStep}
               isSelect={isSelect}
-              coursesSelected={coursesSelected}
+              coursesSelectedId={coursesSelectedId}
               addCourses={addCourses}
               allery={item.allery}
             />
