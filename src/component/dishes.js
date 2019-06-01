@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import menuCourses from "../fe-tech-data.json";
-import Dishe from "./dishe";
+import Dish from "./dish";
 import {STEPS} from '../constants'
 
 const styles = theme => ({
@@ -30,7 +30,7 @@ function Dishes(props) {
         if (item.id === itemCourseSelected) {
           gridCoursis.push(
             <Grid key={item.id} item xs={12} sm={6} md={4}>
-              <Dishe
+              <Dish
                 id={item.id}
                 image={item.image}
                 title={item.title}
@@ -60,7 +60,7 @@ function Dishes(props) {
         let isSelect = dishesSelectedId.indexOf(item.id) !== -1 ? true : false;
         gridCoursis.push(
           <Grid key={item.id} item xs={12} sm={6} md={4}>
-            <Dishe
+            <Dish
               id={item.id}
               image={item.image}
               title={item.title}

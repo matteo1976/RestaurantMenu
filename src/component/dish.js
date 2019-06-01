@@ -17,14 +17,14 @@ import Add from '@material-ui/icons/Add';
 import PropTypes from "prop-types";
 
 
-export default class Dishe extends Component {
+export default class Dish extends Component {
   static propTypes = {
     id:PropTypes.number.isRequired,
-    image:PropTypes.element,
+    image:PropTypes.string,
     title:PropTypes.string,
     spiceLevel:PropTypes.number,
     description:PropTypes.string,
-    courseType:PropTypes.array,
+    courseType:PropTypes.number,
     isSelect:PropTypes.bool,
     menageDishes:PropTypes.func.isRequired,
     allery:PropTypes.array,
@@ -37,7 +37,7 @@ export default class Dishe extends Component {
 
   myClasses = {
     card: {
-      maxWidth: 350
+      maxWidth: 350,
     },
     media: {
       height: 0,
@@ -80,6 +80,9 @@ export default class Dishe extends Component {
     const myClasses = this.myClasses;
 
     let favStyle = this.state.isSelect ? { color: "red" } : { color: "grey" };
+
+
+    //if (this.state.isSelect) { myClasses.card.backgroundColor= "#ead5d5"  }else{ myClasses.card.backgroundColor="white" };
     
     // visual allergy if there are
     let allergyIcons =
@@ -103,6 +106,7 @@ export default class Dishe extends Component {
         onMouseOut={this.toggleRaised}
         raised={this.state.raised}
         onClick={this.addFavorite}
+        //className={myClasses.card}
         style={myClasses.card}
       >
         <CardHeader
