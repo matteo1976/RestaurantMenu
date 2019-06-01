@@ -169,12 +169,8 @@ export default class App extends Component {
               case STEPS.FINISH:
                 return (
                   <div>
-                    <Typography className="instructions">
-                      <p>
                         <h2>This is your menu.</h2>
                         Thank you for choosing Restaurant
-                      </p>
-                    </Typography>
                     <Button onClick={this.handleReset}>Reset</Button>
                   </div>
                 );

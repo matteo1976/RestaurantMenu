@@ -32,13 +32,13 @@ export default class Dish extends Component {
 
   state = {
     isSelect: false,
-    raised: false
+    raised: false,
   };
 
   myClasses = {
-    card: {
-      maxWidth: 350,
-    },
+    // card: {
+    //   maxWidth: 350,
+    // },
     media: {
       height: 0,
       paddingTop: "30.25%" // 16:9
@@ -76,14 +76,12 @@ export default class Dish extends Component {
 
   render() {
     const { title, image, description, allery, spiceLevel } = this.props;
-    var pepper = "\u{1f336}";
-    const myClasses = this.myClasses;
+    let pepper = "\u{1f336}";
+    let myClasses = this.myClasses;
 
-    let favStyle = this.state.isSelect ? { color: "red" } : { color: "grey" };
+    let favStyle = this.state.isSelect ? { color: "#c24641" } : { color: "grey" };
+    let cardStyle=this.state.isSelect ?{backgroundColor: "#ead5d5", maxWidth: 350}:{backgroundColor: "white", maxWidth: 350}
 
-
-    //if (this.state.isSelect) { myClasses.card.backgroundColor= "#ead5d5"  }else{ myClasses.card.backgroundColor="white" };
-    
     // visual allergy if there are
     let allergyIcons =
       allery.length > 0 ? (
@@ -107,7 +105,7 @@ export default class Dish extends Component {
         raised={this.state.raised}
         onClick={this.addFavorite}
         //className={myClasses.card}
-        style={myClasses.card}
+        style={cardStyle}
       >
         <CardHeader
           style={myClasses.title}
