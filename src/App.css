@@ -37,3 +37,19 @@
 .stepControl {
   padding: 2em;
 }
+.gridStepper{
+  align-items:"center";
+  direction:"row";
+  justify:"center";
+
+}
+.dishes{
+  width: "70%"; 
+  margin: "auto"; 
+}
+.allertMessage{
+  text-align: "center";
+  width: "50%";
+  margin: "auto";
+  margin-bottom: "1em";
+};

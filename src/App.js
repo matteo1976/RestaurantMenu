@@ -17,7 +17,7 @@ export default class App extends Component {
   state = {
     activeStep: STEPS.START,
     dishesSelectedId: [],
-    MainCourse_IdDisheSelected:[],
+    mainCourse_IdDisheSelected:[],
     openAlert: false
   };
 
@@ -31,24 +31,24 @@ export default class App extends Component {
 
   // add and delete dishes of final list
   menageDishes = (id,type) => {
-    let { dishesSelectedId,MainCourse_IdDisheSelected } = this.state;
+    let { dishesSelectedId,mainCourse_IdDisheSelected } = this.state;
 
     if (dishesSelectedId.indexOf(id) === -1) { // add course
       dishesSelectedId.push(id);
       if (type===STEPS.MAIN_COURSE){
-        MainCourse_IdDisheSelected.push(id)
+        mainCourse_IdDisheSelected.push(id)
       } 
     } else { // delete course
       dishesSelectedId.splice(dishesSelectedId.indexOf(id), 1);
       if (type===STEPS.MAIN_COURSE){
-        MainCourse_IdDisheSelected.splice(MainCourse_IdDisheSelected.indexOf(type),1)
+        mainCourse_IdDisheSelected.splice(mainCourse_IdDisheSelected.indexOf(type),1)
       } 
     }
-    this.setState({ dishesSelectedId,MainCourse_IdDisheSelected });
+    this.setState({ dishesSelectedId,mainCourse_IdDisheSelected });
   };
 
   handleReset = () => {
-    this.setState({ activeStep: STEPS.START, dishesSelectedId: [],MainCourse_IdDisheSelected:[] });
+    this.setState({ activeStep: STEPS.START, dishesSelectedId: [],mainCourse_IdDisheSelected:[] });
   };
 
   // close dialog for alert in main couse
@@ -57,11 +57,11 @@ export default class App extends Component {
   };
 
   handleNext = () => {
-    let {MainCourse_IdDisheSelected } = this.state;
+    let {mainCourse_IdDisheSelected } = this.state;
     let actualStep = this.state.activeStep;
     
     // ad control for main course
-    if ((actualStep === STEPS.MAIN_COURSE) & (MainCourse_IdDisheSelected.length===0)) {
+    if ((actualStep === STEPS.MAIN_COURSE) & (mainCourse_IdDisheSelected.length===0)) {
       this.setState({ openAlert: true });
     } else {
       this.setState({ activeStep: actualStep + 1 });
@@ -122,9 +122,10 @@ export default class App extends Component {
           <Grid className="stepper" item xs={12}>
             <Grid
               container
-              alignItems={"center"}
-              direction={"row"}
-              justify={"center"}
+              class="gridStepper"
+              // alignItems={"center"}
+              // direction={"row"}
+              // justify={"center"}
             >
               <Stepper
                 style={{ margin: "auto", width: "90%" }}
@@ -140,7 +141,8 @@ export default class App extends Component {
             </Grid>
           </Grid>
         </Grid>
-        <div style={{ width: "70%", margin: "auto" }}>
+        <div class="dishes"> 
+        {/* //style={{ width: "70%", margin: "auto" }} */}
           <Dishes
             courseStep={activeStep}
             dishesSelectedId={dishesSelectedId}
