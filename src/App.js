@@ -17,7 +17,7 @@ export default class App extends Component {
   state = {
     activeStep: STEPS.START,
     dishesSelectedId: [],
-    mainCourse_IdDisheSelected:[],
+    mainCourse_IdDisheSelected: [],
     openAlert: false
   };
 
@@ -28,27 +28,35 @@ export default class App extends Component {
     marginBottom: "1em"
   };
 
-
   // add and delete dishes of final list
-  menageDishes = (id,type) => {
-    let { dishesSelectedId,mainCourse_IdDisheSelected } = this.state;
+  menageDishes = (id, type) => {
+    let { dishesSelectedId, mainCourse_IdDisheSelected } = this.state;
 
-    if (dishesSelectedId.indexOf(id) === -1) { // add course
+    if (dishesSelectedId.indexOf(id) === -1) {
+      // add course
       dishesSelectedId.push(id);
-      if (type===STEPS.MAIN_COURSE){
-        mainCourse_IdDisheSelected.push(id)
-      } 
-    } else { // delete course
+      if (type === STEPS.MAIN_COURSE) {
+        mainCourse_IdDisheSelected.push(id);
+      }
+    } else {
+      // delete course
       dishesSelectedId.splice(dishesSelectedId.indexOf(id), 1);
-      if (type===STEPS.MAIN_COURSE){
-        mainCourse_IdDisheSelected.splice(mainCourse_IdDisheSelected.indexOf(type),1)
-      } 
+      if (type === STEPS.MAIN_COURSE) {
+        mainCourse_IdDisheSelected.splice(
+          mainCourse_IdDisheSelected.indexOf(type),
+          1
+        );
+      }
     }
-    this.setState({ dishesSelectedId,mainCourse_IdDisheSelected });
+    this.setState({ dishesSelectedId, mainCourse_IdDisheSelected });
   };
 
   handleReset = () => {
-    this.setState({ activeStep: STEPS.START, dishesSelectedId: [],mainCourse_IdDisheSelected:[] });
+    this.setState({
+      activeStep: STEPS.START,
+      dishesSelectedId: [],
+      mainCourse_IdDisheSelected: []
+    });
   };
 
   // close dialog for alert in main couse
@@ -57,11 +65,14 @@ export default class App extends Component {
   };
 
   handleNext = () => {
-    let {mainCourse_IdDisheSelected } = this.state;
+    let { mainCourse_IdDisheSelected } = this.state;
     let actualStep = this.state.activeStep;
-    
+
     // ad control for main course
-    if ((actualStep === STEPS.MAIN_COURSE) & (mainCourse_IdDisheSelected.length===0)) {
+    if (
+      (actualStep === STEPS.MAIN_COURSE) &
+      (mainCourse_IdDisheSelected.length === 0)
+    ) {
       this.setState({ openAlert: true });
     } else {
       this.setState({ activeStep: actualStep + 1 });
@@ -141,8 +152,8 @@ export default class App extends Component {
             </Grid>
           </Grid>
         </Grid>
-        <div class="dishes"> 
-        {/* //style={{ width: "70%", margin: "auto" }} */}
+        <div class="dishes">
+          {/* //style={{ width: "70%", margin: "auto" }} */}
           <Dishes
             courseStep={activeStep}
             dishesSelectedId={dishesSelectedId}
@@ -171,8 +182,8 @@ export default class App extends Component {
               case STEPS.FINISH:
                 return (
                   <div>
-                        <h2>This is your menu.</h2>
-                        Thank you for choosing Restaurant
+                    <h2>This is your menu.</h2>
+                    Thank you for choosing Restaurant
                     <Button onClick={this.handleReset}>Reset</Button>
                   </div>
                 );
